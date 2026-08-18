@@ -38,11 +38,18 @@ def save_and_display_gradcam(img, heatmap, alpha=0.4):
 # LLaMA clinical suggestion function
 def get_llama_clinical_advice():
     prompt = (
-        "Provide evidence-based clinical suggestions for managing osteoarthritis (OA). "
-        "Include diagnosis, treatment options (pharmacological and non-pharmacological), "
-        "lifestyle modifications, and the latest research insights. Prioritize guidelines from "
-        "authoritative sources such as the American College of Rheumatology (ACR) and European "
-        "League Against Rheumatism (EULAR). Also, highlight emerging therapies and minimally invasive interventions."
+        "You are assisting a clinician with evidence-based guidance on osteoarthritis (OA) management.\n\n"
+        "Structure your response with these sections:\n"
+        "1. Diagnosis — key clinical criteria, relevant imaging/labs, differential diagnosis\n"
+        "2. Pharmacological treatment — first-line to advanced options, with dosing considerations\n"
+        "3. Non-pharmacological treatment — physical therapy, weight management, assistive devices\n"
+        "4. Lifestyle modifications — diet, exercise, activity modification\n"
+        "5. Emerging therapies — minimally invasive interventions (e.g. injections, regenerative options), recent trial data\n\n"
+        "Ground all recommendations in current ACR (American College of Rheumatology) and EULAR "
+        "(European League Against Rheumatism) guidelines. Where ACR and EULAR recommendations differ, "
+        "note the discrepancy explicitly. Cite the guideline year/version where possible. "
+        "Flag any recommendations that are conditional or have low-quality evidence per the source guidelines."
+    )
     )
     try:
         response = ollama.chat(model="llama3.2:1b", messages=[
